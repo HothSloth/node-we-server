@@ -1,11 +1,150 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>None of your business.</title>
+        <title>Weather Around the World</title>
+        <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto');
+        </style>
+        <link rel='stylesheet' type='text/css' href='stylesheets/style.css' />
+        <script src="jquery-3.3.1.min.js"></script>
     </head>
     <body>
-        <h1>{{title}}</h1>
+        <div id = "navBar" >
+            <a id="homePage" href="/">
+                <img src="stylesheets/icons/sunicon.png">
+            </a>
+        </div>
 
-        <p>{{text}}</a></p>
+        <div id="icon">
+            <script>
+                if("{{stat}}"=="clear-night"){
+                    $("#icon").append("<img src='stylesheets/icons/clearnight.png'>");
+                }else if("{{stat}}"=="clear-day"){
+                    $("#icon").append("<img src='stylesheets/icons/clearday.png'>");
+                }else if("{{stat}}"=="partly-cloudy-day"){
+                    $("#icon").append("<img src='stylesheets/icons/partlycloudyday.png'>");
+                }else if("{{stat}}"=="partly-cloudy-night"){
+                    $("#icon").append("<img src='stylesheets/icons/partlycloudynight.png'>");
+                }else if("{{stat}}"=="snow"){
+                    $("#icon").append("<img src='stylesheets/icons/snow.png'>");
+                }else if("{{stat}}"=="rain"){
+                    $("#icon").append("<img src='stylesheets/icons/rain.png'>");
+                }else if("{{stat}}"=="cloudy"){
+                    $("#icon").append("<img src='stylesheets/icons/clouds.png'>");
+                }else if("{{stat}}"=="sleet"){
+                    $("#icon").append("<img src='stylesheets/icons/thunder.png'>");
+                }
+            </script>
+        </div>
+
+        <div id = "main">
+            <h3>It's {{tmp}}ºC in {{adrs}},<br></h3>
+            <script>
+                if({{tmp}}=={{atmp}}){
+                    $("h3").append("and it feels {{atmp}}ºC as well.");
+                }else{
+                    $("h3").append("though it feels {{atmp}}ºC.");
+                };
+            </script>
+            <form action="local">
+                <input type="text" placeholder="type here" name="location" id="input">
+                
+                <button id='button'>Search</button>
+            </form><br>
+            
+        </div>
+            
+        <div id="fav">
+            <button onclick='addFavorite()' id='button'><div id='buttonimage'></div></button>
+            <form action="local">
+                <select id="addAFavorite" name="location">
+                    <option value="">Choose your favorite</option>
+                </select>
+                <input id="button" type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div id="extra">
+            It's currently 
+            <script>
+                $("#extra").append("{{lcltm}}. {{sum}}");
+            </script>
+        </div>
+
+        <div id = "footer">
+            <a class="media" id="twitter" href="http://www.twitter.com">
+                <img src="stylesheets/icons/twittericon.png">
+            </a>
+            <a class="media" id="facebook" href="http://www.facebook.com">
+                <img src="stylesheets/icons/facebookicon.png">
+            </a>
+            <a class="media" id="youtube" href="http://www.youtube.com">
+                <img src="stylesheets/icons/youtubeicon.png">
+            </a>
+            <a class="media" id="instagram" href="http://www.instagram.com">
+                <img src="stylesheets/icons/instagramicon.png">
+            </a>
+        </div>
+
+        <script>
+            if({{err}}!=0){
+                $("#body").append("There's been an error.");
+                console.log("There's been an error.");
+            }
+            //LOCAL STORAGE//
+            var favorites=[];
+            var fav_string=localStorage.getItem('favs');
+            if(fav_string){
+                favorites = JSON.parse(fav_string);
+            };
+
+            for(var i=0; i<favorites.length+1; i++){
+                if(favorites[i]=='{{adrs}}'){
+                    $("#buttonimage").empty();
+                    $("#buttonimage").append("<img src='stylesheets/icons/starfull.png'>");
+                    break;
+                }else{
+                    $("#buttonimage").empty();
+                    $("#buttonimage").append("<img src='stylesheets/icons/staroutline.png'>");
+                };
+            };
+
+            
+            
+
+            function addFavorite(){
+                var newLoc = true;
+                
+                for(var i=0; i<favorites.length+1; i++){
+                    if(favorites[i]=='{{adrs}}'){
+                        console.log("That's already been entered");
+                        $("#buttonimage").empty();
+                        $("#buttonimage").append("<img src='stylesheets/icons/staroutline.png'>");
+                        favorites.splice(i,1);
+                        newLoc = false;
+                        break;
+                    };
+                };
+                if(newLoc){
+                    console.log('New Location added');
+                    $("#buttonimage").empty();
+                    $("#buttonimage").append("<img src='stylesheets/icons/starfull.png'>");
+                    favorites.push(('{{adrs}}'));
+                };
+                localStorage.setItem('favs', JSON.stringify(favorites));   
+            };
+
+            if(favorites.length!=0){
+                for(var j=0; j<favorites.length; j++){
+                    $('#addAFavorite').append('<br><option>'+favorites[j]+'</option>');
+                };
+            };
+            
+            console.log(localStorage);
+            console.log(favorites);
+
+            
+
+        </script>
     </body>
 </html>

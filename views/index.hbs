@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Weather Around the World</title>
+        <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto');
+        </style>
+        <link rel='stylesheet' type='text/css' href='stylesheets/style.css' />
+        <script src="jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <div id = "navBar" >
+            <a id="homePage" href="/">
+                <img src="stylesheets/icons/sunicon.png">
+            </a>
+        </div>
+
+        <div id = "mainIndex">
+            <h3 id="h3Index">Where are you?</h3>
+            <form action="local">
+                <input type="text" placeholder="type here" name="location" id="input">
+                
+                <button id='button'>Search</button>
+
+            </form><br>
+        </div>
+
+        <div id="fav">
+            <form action="local">
+                <select id="addAFavorite" name="location">
+                    <option value="">Choose your favorite</option>
+                </select>
+                <input id="button" type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div id = "footer">
+            <a class="media" id="twitter" href="http://www.twitter.com">
+                <img src="stylesheets/icons/twittericon.png">
+            </a>
+            <a class="media" id="facebook" href="http://www.facebook.com">
+                <img src="stylesheets/icons/facebookicon.png">
+            </a>
+            <a class="media" id="youtube" href="http://www.youtube.com">
+                <img src="stylesheets/icons/youtubeicon.png">
+            </a>
+            <a class="media" id="instagram" href="http://www.instagram.com">
+                <img src="stylesheets/icons/instagramicon.png">
+            </a>
+        </div>
+        <script>
+            var favorites=[];
+            var fav_string=localStorage.getItem('favs');
+            if(fav_string){
+                favorites = JSON.parse(fav_string);
+            };
+
+
+            if(favorites.length!=0){
+                for(var j=0; j<favorites.length; j++){
+                    $('#addAFavorite').append('<br><option>'+favorites[j]+'</option>');
+                };
+            };
+        </script>
+    </body>
+</html>

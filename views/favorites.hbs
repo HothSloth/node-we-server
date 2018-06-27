@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Weather Around the World</title>
+        <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto');
+        </style>
+        <link rel='stylesheet' type='text/css' href='stylesheets/style.css' />
+        <script src="jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <div id = "navBar" >
+            <a id="homePage" href="/">
+                <img src="stylesheets/icons/sunicon.png">
+            </a>
+        </div>
+
+        <div id="icon">
+            <script>
+                if("{{stat}}"=="clear-night"){
+                    $("#icon").append("<img src='stylesheets/icons/clearnight.png'>");
+                }else if("{{stat}}"=="clear-day"){
+                    $("#icon").append("<img src='stylesheets/icons/clearday.png'>");
+                }else if("{{stat}}"=="partly-cloudy-day"){
+                    $("#icon").append("<img src='stylesheets/icons/partlycloudyday.png'>");
+                }else if("{{stat}}"=="partly-cloudy-night"){
+                    $("#icon").append("<img src='stylesheets/icons/partlycloudynight.png'>");
+                }else if("{{stat}}"=="snow"){
+                    $("#icon").append("<img src='stylesheets/icons/snow.png'>");
+                }else if("{{stat}}"=="rain"){
+                    $("#icon").append("<img src='stylesheets/icons/rain.png'>");
+                }else if("{{stat}}"=="cloudy"){
+                    $("#icon").append("<img src='stylesheets/icons/clouds.png'>");
+                }else if("{{stat}}"=="sleet"){
+                    $("#icon").append("<img src='stylesheets/icons/thunder.png'>");
+                }
+            </script>
+        </div>
+
+        <div id = "main">
+            <h3>HELLO<br></h3>
+            <form action="local">
+                <input type="text" placeholder="type here" name="location" id="input">
+                <button id='button'>Search</button>
+            </form>
+        </div>
+
+        <div id="select">
+            <form action="local">
+                <button id="button">Try Me!</button>
+            </form>
+        </div>
+
+
+        <div id="extra">
+            <script>
+                console.log(localStorage.getItem('favs'));
+                var favorites=[];
+                var fav_string=localStorage.getItem('favs');
+                if(fav_string){
+                    favorites = JSON.parse(fav_string);
+                };
+                $('#extra').append(favorites);
+            </script>
+
+        <div id = "footer">
+            <a class="media" id="twitter" href="http://www.twitter.com">
+                <img src="stylesheets/icons/twittericon.png">
+            </a>
+            <a class="media" id="facebook" href="http://www.facebook.com">
+                <img src="stylesheets/icons/facebookicon.png">
+            </a>
+            <a class="media" id="youtube" href="http://www.youtube.com">
+                <img src="stylesheets/icons/youtubeicon.png">
+            </a>
+            <a class="media" id="instagram" href="http://www.instagram.com">
+                <img src="stylesheets/icons/instagramicon.png">
+            </a>
+        </div>
+
+        <script>
+
+        </script>
+    </body>
+</html>

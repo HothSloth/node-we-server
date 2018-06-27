@@ -1,0 +1,128 @@
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: #e9e9e9;
+}
+
+h3{
+    color: rgb(70, 70, 70);
+    font-size: 50px;
+}
+
+#h3Index{
+    color: rgb(70, 70, 70);
+    font-size: 100px;
+}
+
+#navBar{
+    background-color: #99d3df;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 75px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+}
+
+#homePage{
+    background-color:rgba(255, 255, 255, 0);
+    width:75px;
+    height:75px;
+    margin-left:1%;
+    margin-top:0.25%;
+    display: block;
+}
+
+#icon{
+    height:128px;
+    width:128px;
+    border-radius:50px;
+    background-color:white;
+    margin-left:46%;
+    margin-top:10%;
+}
+
+#input{
+    border-radius: 15px;
+    border: white;
+    width:75px;
+    padding:8px 0px 8px 30px;
+    background-image: url('icons/searchicon.png');
+    background-position: 4px 4px;
+    background-repeat: no-repeat;
+    background-color:#d3d3d3;
+    transition: width 0.4s ease-in-out;
+}
+
+#input:focus{
+    background-color:#fff;
+    width:500px;
+    outline-width: 0;
+}
+
+#button{
+    padding:5px;
+    border: white;
+    height:30px;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#addAFavorite{
+    padding:5px;
+    border: #d3d3d3;
+    height:30px;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#mainIndex{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+}
+
+#main{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+}
+
+#fav{
+    position: absolute;
+    top:10%;
+    left:90%;
+    text-align:center;
+}
+
+#extra{
+    width:100%;
+    text-align: center;
+    margin-top:17%;
+}
+
+#footer{
+    background-color: #99d3df;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4.5%;
+    padding: 0.75% 0 0 0;
+}
+
+#twitter{
+    margin-left:45%;
+}
+
+.media{
+    width:auto;
+    height:auto;
+    margin-left:10px;
+    margin-top:80%;
+}
+
