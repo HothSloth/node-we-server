@@ -1,41 +1,73 @@
+const request = require('request');
+const yargs = require('yargs');
+const express = require('express');
+const hbs = require('hbs');
+const path = require('path');
+const moment = require('moment');
+const momentTimezone = require('moment-timezone');
 
-const express=require('express');
-const app=express();
-const hbs=require('hbs');
 
+const app = express();
 
+const argv = yargs.argv;
+const DarkSkyKey='bfda71559223c62b5c93a22bf00779c2';
+const GoogleAPIKey='AIzaSyDTG7NdkRN0xlCBq8VjFNpWqVXsSbqM8IA';
+var lat, lng, temp, apparentTemp, weatherStatus, summary, timeZone;
+var erro=0;
 
-app.use(express.static(__dirname + '/public'))
-app.set('view engine', 'hbs');
-
-app.get('/', (request, response) => {
-    //response.send('<h1>Hello from Express!</>');
-    response.render('template.hbs', {
-        title: 'Welcome to my site',
-        text: "...or naaaah"
-    });
+app.set("view engine", "hbs");
+app.get('/',(req,res)=>{
+    res.render('index.hbs');
 });
 
-app.get('/about', (request, response) =>{
-    response.render('template.hbs', {
-        title: 'About',
-        text: "It's me, ya boy, skinny Pete."
+app.get('/local',(req,res)=>{
+    var address = req.query.location;
+    var encodedAddress = encodeURIComponent(address);
+
+    var urlGoogle = `https://maps.googleapis.com/maps/api/geocode/json?key=${GoogleAPIKey}&address=${encodedAddress}`;
+
+
+    request({url: urlGoogle, json: true}, (error, response, body) =>{
+        if (error==null){
+            console.log("Everything is fine!");
+        }else{
+            console.log("Uh Oh! There's been an error, and it seems like it's on your end. Look it up: ",error);
+            erro=1;
+        }
+
+        if(response.STATUS_CODES<200||207>response.STATUS_CODES){
+            console.log("Well, there seems to have been a mistake on our end. Sorry, try again later! If you want to read up on it, the error was #",response.STATUS_CODES);
+            erro=2;
+        }else{
+            console.log("Still going well.");
+        }
+
+        if(body.results[0]==undefined){
+            console.log("Please, input an actual place on Earth. (There was an Easter Egg here, but I removed it :( ).")
+            error=3;
+        }
+
+        lat=body.results[0].geometry.location.lat;
+        lng=body.results[0].geometry.location.lng;
+
+        var urlDarkSky = `https://api.darksky.net/forecast/${DarkSkyKey}/${lat},${lng}?units=si`;
+        request({url: urlDarkSky, json: true}, (error, response, body)=>{
+            temp=body.currently.temperature;
+            apparentTemp=body.currently.apparentTemperature;
+            weatherStatus=body.currently.icon;
+            summary=body.hourly.summary;
+            timeZone=body.timezone;
+            localTime=moment().tz(timeZone).format('h:mm a');
+            
+            
+            console.log(moment().tz(timeZone).format('YYYY-MM-DD-HH-mm'));
+            
+
+            console.log(summary);
+            console.log('Na Rua '+address+' estão '+temp+'ºC, e aparenta estar '+apparentTemp+'ºC. Está '+weatherStatus);
+            app.use(express.static(path.join(__dirname, '/public')));
+            res.render('result.hbs', {err:erro, tmp:temp, atmp:apparentTemp, adrs:address, stat:weatherStatus, sum:summary, lcltm:localTime});
+        });
     });
 });
-
-app.get('/carochao', (request, response)=>{
-    var date = new Date().toString();  
-
-    response.render('carochao_template.hbs', {
-        info: date
-    });
-});
-
-//Escutar na porta 3000. Convém ser acima da 1024, pois são usadas pelo sistema
 app.listen(3000);
-
-
-//formar grupos e decidir +- o que queremos extrair do dark sky
-//se tivermos curiosidade/vontade, ver como o handlebar parcials - cenas iguais em tudo ->  {{> footer}}
-//pensar na estrutura
-//o que fica do lado do cliente e o que fica do lado do servidor
