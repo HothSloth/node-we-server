@@ -10,8 +10,8 @@ const momentTimezone = require('moment-timezone');
 const app = express();
 
 const argv = yargs.argv;
-const DarkSkyKey='bfda71559223c62b5c93a22bf00779c2';
-const GoogleAPIKey='AIzaSyDTG7NdkRN0xlCBq8VjFNpWqVXsSbqM8IA';
+const DarkSkyKey=; //Inserir key Dark Sky
+const GoogleAPIKey=; //Inserir Key Google
 var lat, lng, temp, apparentTemp, weatherStatus, summary, timeZone;
 var erro=0;
 
