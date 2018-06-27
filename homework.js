@@ -66,14 +66,8 @@ app.get('/local',(req,res)=>{
             console.log(summary);
             console.log('Na Rua '+address+' estão '+temp+'ºC, e aparenta estar '+apparentTemp+'ºC. Está '+weatherStatus);
             app.use(express.static(path.join(__dirname, '/public')));
-            res.render('template.hbs', {err:erro, tmp:temp, atmp:apparentTemp, adrs:address, stat:weatherStatus, sum:summary, lcltm:localTime});
+            res.render('result.hbs', {err:erro, tmp:temp, atmp:apparentTemp, adrs:address, stat:weatherStatus, sum:summary, lcltm:localTime});
         });
     });
 });
-
-app.get('/favorites',(req,res)=>{
-    app.use(express.static(path.join(__dirname, '/public')));
-    res.render('favorites.hbs', {});
-});
-
 app.listen(3000);
